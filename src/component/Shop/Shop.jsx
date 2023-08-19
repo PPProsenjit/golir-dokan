@@ -8,34 +8,48 @@ const Shop = () => {
     const [products, setProducts] = useState([]);
     const [cart, setCart] = useState([]);
 
-    useEffect( () =>{
+    useEffect(() => {
         fetch('products.json')
-        .then(res =>res.json())
-        .then(data => setProducts(data))
-    },[])
+            .then(res => res.json())
+            .then(data => setProducts(data))
+    }, [])
 
-  useEffect (() =>{
-    const getStoreCart = getShoppingCart();
-    const newCart = [];
-    //get id from storeCart 
-    for (const id in getStoreCart){
-        //match product id with product id and get product state
-        const addedProduct = products.find(product => product.id === id);
+    useEffect(() => {
+        const getStoreCart = getShoppingCart();
+        const SaveCart = [];
+        //get id from storeCart 
+        for (const id in getStoreCart) {
+            //match product id with product id and get product state
+            const addedProduct = products.find(product => product.id === id);
 
-        if(addedProduct){
-            //add quantity
-            const quantity = getStoreCart[id];
-            addedProduct.quantity = quantity;
-            newCart.push(addedProduct);
+            if (addedProduct) {
+                //add quantity
+                const quantity = getStoreCart[id];
+                addedProduct.quantity = quantity;
+                //set new array add data
+                SaveCart.push(addedProduct);
+            }
+            // push setCart in new array
+            setCart(SaveCart);
         }
-        setCart(newCart);
-    }
-    
-    
-  },[products])
 
-    const handleAddTOCart = (product) =>{
-        const newCart = [...cart, product];
+
+    }, [products])
+
+    const handleAddTOCart = (product) => {
+        let newCart = [];
+        //const newCart = [...cart, product];
+        const exists = cart.find(pd => pd.id === product.id)
+
+        if (!exists) {
+            product.quantity = 1;
+            newCart = [...cart, product]
+        }
+        else {
+            exists.quantity = exists.quantity + 1;
+            const remaining = cart.filter(pd => pd.id !== product.id);
+            newCart= [...remaining, exists]
+        }
         setCart(newCart);
         addToDb(product.id)
     }
@@ -43,16 +57,16 @@ const Shop = () => {
         <div className='shop-container'>
             <div className='items-container'>
                 {
-                    products.map(product => <Product 
-                        key = {product.id}
-                        product = {product}
-                        handleAddTOCart = {handleAddTOCart}
+                    products.map(product => <Product
+                        key={product.id}
+                        product={product}
+                        handleAddTOCart={handleAddTOCart}
                     ></Product>)
                 }
             </div>
             <div className='orders-container'>
                 <Cart
-                cart ={cart}
+                    cart={cart}
                 ></Cart>
             </div>
         </div>
