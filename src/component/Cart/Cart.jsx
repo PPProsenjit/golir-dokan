@@ -18,7 +18,7 @@ const Cart = ({cart}) => {
             <p>Total Price:${totalPrice}</p>
             <p>Total Shopping Charge:${shipping}</p>
             <p>tex:${tax}</p>
-            <h6 >Grant Total:${grantTotal}</h6>
+            <h6>Grant Total:${grantTotal}</h6>
 
         </div>
     );
