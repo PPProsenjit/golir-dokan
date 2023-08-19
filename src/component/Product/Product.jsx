@@ -1,11 +1,12 @@
-import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCartShopping } from '@fortawesome/free-solid-svg-icons'
 import './Product.css'
 const Product = (props) => {
 
+    
     const { name, seller, img, price, ratings } = props.product;
 
+    // eslint-disable-next-line react/prop-types
     const handleAddTOCart = props.handleAddTOCart;
 
     return (
@@ -16,7 +17,6 @@ const Product = (props) => {
                 <p>Price: ${price}</p>
                 <p>Manufacturer: {seller}</p>
                 <p>Rating: {ratings} star</p>
-
             </div>
             <button onClick={() => handleAddTOCart(props.product)} className='btn-cart'>
                 Add to Cart
