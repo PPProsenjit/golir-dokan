@@ -40,7 +40,7 @@ const Shop = () => {
         let newCart = [];
         //const newCart = [...cart, product];
         const exists = cart.find(pd => pd.id === product.id)
-
+        //set quantity 
         if (!exists) {
             product.quantity = 1;
             newCart = [...cart, product]
@@ -48,7 +48,7 @@ const Shop = () => {
         else {
             exists.quantity = exists.quantity + 1;
             const remaining = cart.filter(pd => pd.id !== product.id);
-            newCart= [...remaining, exists]
+            newCart = [...remaining, exists]
         }
         setCart(newCart);
         addToDb(product.id)
