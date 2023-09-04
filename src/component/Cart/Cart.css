@@ -4,3 +4,10 @@
     top: 0;
     padding: 23px;
 }
+.clear-container{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    color: white;
+    background-color: red;
+}
